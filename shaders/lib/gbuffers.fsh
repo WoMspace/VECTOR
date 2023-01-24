@@ -10,7 +10,7 @@ in vec3 vertex_color;
 /* RENDERTARGETS:0 */
 void main() {
 	vec3 color = texture2D(texture, mid_uv).rgb;
-	float alpha = texture2D(texture, uv, 3.0).a;
+	float alpha = texture2D(texture, uv).a;
 
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
