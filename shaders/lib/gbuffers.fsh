@@ -16,5 +16,9 @@ void main() {
 	#endif
 	if (color.a < alphaTestRef) discard;
 
+	#ifdef GBUFFERS_SKYBASIC
+	color.rgb = vec3(0.5);
+	#endif
+
 	gl_FragData[0] = color;
 }
