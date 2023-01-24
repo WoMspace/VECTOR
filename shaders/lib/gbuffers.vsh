@@ -7,7 +7,7 @@ out vec2 uv;
 #if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 in vec4 vaColor;
 in vec3 vaPosition;
-out vec4 vcolor;
+out vec3 vertex_color;
 #endif
 
 void main() {
@@ -15,6 +15,6 @@ void main() {
 	uv = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	mid_uv = mc_midTexCoord;
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
-	vcolor = vaColor;
+	vertex_color = vaColor.rgb;
 	#endif
 }

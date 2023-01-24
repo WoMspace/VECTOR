@@ -30,7 +30,7 @@ void main() {
 	float depth = 0.0; //texture2D(depthtex1, uv).r;
 	for(int y = 0; y < 3; y++) {
 		for(int x = 0; x < 3; x++) {
-			vec2 offset = pixelSize * vec2(x - 1.0, y - 1.0);
+			vec2 offset = pixelSize * vec2(x - 1.0, y - 1.0) * 1.0;
 			float rawDepth = texture2D(depthtex0, uv + offset).r;
 			depth += linearizeDepth(rawDepth) * edge_kernel[y * 3 + x];
 		}
@@ -51,7 +51,7 @@ void main() {
 	color = normalize(color) * line;
 	#endif
 
-	
+
 
 	// color = texture2D(colortex0, uv).rgb;
 

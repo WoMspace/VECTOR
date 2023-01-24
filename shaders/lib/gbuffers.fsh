@@ -4,17 +4,17 @@ uniform sampler2D texture;
 uniform float alphaTestRef;
 
 #if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
-in vec4 vcolor;
+in vec3 vertex_color;
 #endif
 
 /* RENDERTARGETS:0 */
 void main() {
 	vec3 color = texture2D(texture, mid_uv).rgb;
-	float alpha = texture2D(texture, uv).a;
+	float alpha = texture2D(texture, uv, 3.0).a;
 
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
-	// color *= vcolor;
+	// color *= vertex_color;
 	#endif
 	if (alpha < alphaTestRef) discard;
 
