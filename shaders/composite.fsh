@@ -41,7 +41,7 @@ void main() {
 	float line = grey + depth > LINE_THRESHOLD ? 1.0 : 0.0;
 
 	#ifdef MONOCHROME
-	color = normalize(vec3(LINE_COLOR_R, LINE_COLOR_G, LINE_COLOR_B)) * line;
+	color = normalize(USER_COLOR) * line;
 	#else
 	color = normalize(color) * line;
 	#endif

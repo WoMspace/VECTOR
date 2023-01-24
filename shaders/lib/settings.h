@@ -3,12 +3,15 @@ uniform float viewHeight;
 vec2 pixelSize = 1.0 / vec2(viewWidth, viewHeight);
 
 #define MONOCHROME
+#define THICKER_LINES
+#define SCANLINES
 // #define PIXEL_SIZE 1 // [1 2 4 8 16 32 64]
 // const float pixel_power = log2(PIXEL_SIZE);
 
 #define LINE_COLOR_R 0.0 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 #define LINE_COLOR_G 1.0 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 #define LINE_COLOR_B 0.3 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
+const vec3 USER_COLOR = vec3(LINE_COLOR_R, LINE_COLOR_G, LINE_COLOR_B);
 #define LINE_THRESHOLD 0.1 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 
 #define BLOOM_MIX 0.7 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]

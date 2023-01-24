@@ -6,6 +6,8 @@ uniform sampler2D colortex0;
 uniform sampler2D colortex1;
 uniform sampler2D colortex2;
 const bool colortex2Clear = false;
+// const int colortex0Format = RGBA16F;
+// const int colortex1Format = RGBA16F;
 // const int colortex2Format = RGBA16F;
 uniform float frameTime;
 in vec2 uv;
