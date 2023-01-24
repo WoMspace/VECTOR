@@ -22,8 +22,11 @@ void main() {
 	float lineStrength = dot(color, vec3(0.21, 0.72, 0.07));
 	lineStrength = lineStrength > LINE_THRESHOLD ? 1.0 : 0.0;
 
-	// color = vec3(LINE_COLOR_R, LINE_COLOR_G, LINE_COLOR_B) * lineStrength;
+	#ifdef MONOCHROME
+	color = normalize(vec3(LINE_COLOR_R, LINE_COLOR_G, LINE_COLOR_B)) * lineStrength;
+	#else
 	color = normalize(color) * lineStrength;
+	#endif
 
 	gl_FragData[0] = vec4(color, 1.0);
 }
