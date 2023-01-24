@@ -13,7 +13,7 @@ out vec3 vertex_color;
 void main() {
 	gl_Position = ftransform();
 	uv = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
-	mid_uv = mc_midTexCoord;
+	mid_uv = mc_midTexCoord - 0.01;
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 	vertex_color = vaColor.rgb;
 	#endif

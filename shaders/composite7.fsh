@@ -13,7 +13,7 @@ void main() {
 	vec3 bloom = texture2D(colortex1, uv).rgb;
 
 	color = color + mix(color, bloom, BLOOM_MIX);
-	color = clamp(color, 1.0, 0.0);
+	color = clamp(color, 0.0, 1.0);
 
 	gl_FragData[0] = vec4(color, 1.0);
 }
