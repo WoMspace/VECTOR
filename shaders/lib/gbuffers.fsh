@@ -8,7 +8,7 @@ in vec4 vcolor;
 
 /* RENDERTARGETS:0 */
 void main() {
-	vec4 color = texture2D(texture, uv);
+	vec4 color = texture2D(texture, uv, 3.0);
 
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)

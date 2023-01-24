@@ -28,5 +28,8 @@ void main() {
 	color = normalize(color) * lineStrength;
 	#endif
 
+
+	// color = texture2D(colortex0, uv).rgb;
+
 	gl_FragData[0] = vec4(color, 1.0);
 }
