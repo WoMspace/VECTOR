@@ -5,6 +5,7 @@ vec2 pixelSize = 1.0 / vec2(viewWidth, viewHeight);
 #define MONOCHROME
 #define THICKER_LINES
 #define SCANLINES
+#define CURVATURE
 // #define PIXEL_SIZE 1 // [1 2 4 8 16 32 64]
 // const float pixel_power = log2(PIXEL_SIZE);
 
