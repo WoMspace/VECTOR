@@ -12,7 +12,7 @@ const bool colortex2Clear = false;
 uniform float frameTime;
 in vec2 uv;
 
-/* RENDERTARGETS:0,2 */
+/* RENDERTARGETS: 0,2 */
 void main() {
 
 	vec3 color = texture2D(colortex0, uv).rgb;
@@ -22,9 +22,9 @@ void main() {
 	color = clamp(color, 0.0, 1.0);
 
 	vec3 prevFrame = texture2D(colortex2, uv).rgb;
-	prevFrame = mix(color, prevFrame, exp2(-46.0 * frameTime));
-	color = mix(color, prevFrame, 0.1);
+	prevFrame = mix(color, prevFrame, exp2(-32.0 * frameTime));
+	color = mix(color, prevFrame, 0.5);
 
 	gl_FragData[0] = vec4(color, 1.0);
-	gl_FragData[0] = vec4(prevFrame, 1.0);
+	gl_FragData[1] = vec4(prevFrame, 1.0);
 }
