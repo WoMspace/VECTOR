@@ -2,7 +2,7 @@ uniform float viewWidth;
 uniform float viewHeight;
 vec2 pixelSize = 1.0 / vec2(viewWidth, viewHeight);
 
-#define VECTOR 0 // [0 1 2 3 4]
+#define VECTOR_SHADER 0 // [0 1 2 3 4]
 
 // #define SCANLINES
 #define GHOSTING
@@ -28,5 +28,8 @@ const vec3 USER_BG_COLOR = normalize(vec3(BG_COLOR_R, BG_COLOR_G, BG_COLOR_B)) *
 #define BLOOM_MIX 0.7 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 #define BLOOM_SIZE 1 // [0.1 0.2 0.4 0.8 1 2 4 6 8 12 16 24 32 48 64]
 
+// Fix wonky option screen parsing
 #ifdef GHOSTING
 #endif
+// #ifdef VECTOR_SHADER
+// #endif

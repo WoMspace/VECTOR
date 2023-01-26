@@ -1,0 +1,48 @@
+option.VECTOR_SHADER=VECTOR
+value.VECTOR_SHADER.0=§aVECTOR
+value.VECTOR_SHADER.1=§6VECTOR
+value.VECTOR_SHADER.2=§cVECTOR
+value.VECTOR_SHADER.3=§fVECTOR
+value.VECTOR_SHADER.4=§bVECTOR
+
+profile.VECTOR=§aVECTOR
+profile.IBM=§2IBM
+profile.MARV=§4MARV
+profile.VEGAS=§6VEGAS
+profile.JPL=§fJPL
+
+screen.LINES.comment=Settings related to lines such as color
+screen.SCREEN.comment=Settings related to the screen such as bloom and scanlines
+
+option.SCANLINES.comment=Enables scanlines, emulating limited vertical resolution
+option.GHOSTING.comment=Enables ghosting due to phosphor fading
+
+option.CURVATURE_X=HORIZONTAL CURVATURE
+option.CURVATURE_X.comment=Emulate horizontal screen curvature
+option.CURVATURE_Y=VERTICAL CURVATURE
+option.CURVATURE_Y.comment=Emulate vertical screen curvature
+
+option.MONOCHROME.comment=Screen only shows one color
+option.THICKER_LINES=THICKER LINES
+option.THICKER_LINES.comment=Thicken all lines. This runs after edge detection, so won't make more edges show up
+option.LINE_COLOR_R=LINE RED
+option.LINE_COLOR_R.comment=Amount of RED in the line color
+option.LINE_COLOR_G=LINE GREEN
+option.LINE_COLOR_G.comment=Amount of GREEN in the line color
+option.LINE_COLOR_B=LINE BLUE
+option.LINE_COLOR_B.comment=Amount of BLUE in the line color
+option.BG_COLOR_R=BACKGROUND RED
+option.BG_COLOR_R.comment=Amount of RED in the background color
+option.BG_COLOR_G=BACKGROUND GREEN
+option.BG_COLOR_G.comment=Amount of GREEN in the background color
+option.BG_COLOR_B=BACKGROUND BLUE
+option.BG_COLOR_B.comment=Amount of BLUE in the background color
+option.BG_COLOR_MUL=BACKGROUND BRIGHTNESS
+option.BG_COLOR_MUL.comment=Brightness of background
+option.LINE_THRESHOLD=LINE THRESHOLD
+option.LINE_THRESHOLD.comment=Higher threshold means less lines detected
+
+option.BLOOM_MIX=BLOOM MIX
+option.BLOOM_MIX.comment=The opacity of the bloom on top of the image
+option.BLOOM_SIZE=BLOOM SIZE
+option.BLOOM_SIZE.comment=The spread of the bloom
