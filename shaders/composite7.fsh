@@ -21,10 +21,12 @@ void main() {
 	color = color + mix(color, bloom, BLOOM_MIX);
 	color = clamp(color, 0.0, 1.0);
 
+	#ifdef GHOSTING
 	vec3 prevFrame = texture2D(colortex2, uv).rgb;
 	prevFrame = mix(color, prevFrame, exp2(-32.0 * frameTime));
 	color = mix(color, prevFrame, 0.5);
+	gl_FragData[1] = vec4(prevFrame, 1.0);
+	#endif
 
 	gl_FragData[0] = vec4(color, 1.0);
-	gl_FragData[1] = vec4(prevFrame, 1.0);
 }
