@@ -1,16 +1,24 @@
 in vec2 uv;
 in vec2 mid_uv;
+in mat3 tbn;
 uniform sampler2D texture;
+uniform sampler2D normals;
 uniform float alphaTestRef;
+uniform mat4 gbufferModelViewInverse;
 
 #if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 in vec3 vertex_color;
 #endif
 
-/* RENDERTARGETS:0 */
+/* RENDERTARGETS:0,3 */
 void main() {
 	vec3 color = texture2D(texture, mid_uv).rgb;
+	vec3 normal = texture2D(normals, uv).xyz;
 	float alpha = texture2D(texture, uv).a;
+
+	normal = normal * 2.0 - 1.0;
+	normal = tbn * normal;
+	normal = mat3(gbufferModelViewInverse) * normal;	
 
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
@@ -23,4 +31,5 @@ void main() {
 	#endif
 
 	gl_FragData[0] = vec4(color, 1.0);
+	gl_FragData[1] = vec4(normal, 1.0);
 }

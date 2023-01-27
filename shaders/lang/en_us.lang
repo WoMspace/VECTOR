@@ -11,7 +11,10 @@ profile.MARV=§4MARV
 profile.VEGAS=§6VEGAS
 profile.JPL=§fJPL
 
-screen.LINES.comment=Settings related to lines such as color
+screen.LINE_COLOR=LINE COLOR
+screen.LINE_COLOR.comment=Control the line and background color
+screen.LINE_SHAPE=LINE SHAPE
+screen.LINE_SHAPE.comment=Tune the amount of lines
 screen.SCREEN.comment=Settings related to the screen such as bloom and scanlines
 
 option.SCANLINES.comment=Enables scanlines, emulating limited vertical resolution
@@ -39,8 +42,12 @@ option.BG_COLOR_B=BACKGROUND BLUE
 option.BG_COLOR_B.comment=Amount of BLUE in the background color
 option.BG_COLOR_MUL=BACKGROUND BRIGHTNESS
 option.BG_COLOR_MUL.comment=Brightness of background
-option.LINE_THRESHOLD=LINE THRESHOLD
-option.LINE_THRESHOLD.comment=Higher threshold means less lines detected
+option.LINE_THRESHOLD_CONTRAST=LINE CONTRAST THRESHOLD
+option.LINE_THRESHOLD_CONTRAST.comment=Higher threshold means less lines detected
+option.LINE_THRESHOLD_DEPTH=LINE DEPTH THRESHOLD
+option.LINE_THRESHOLD_DEPTH.comment=Higher threshold means less lines detected
+option.LINE_THRESHOLD_NORMAL=LINE NORMAL THRESHOLD
+option.LINE_THRESHOLD_NORMAL.comment=Higher threshold means less lines detected
 
 option.BLOOM_MIX=BLOOM MIX
 option.BLOOM_MIX.comment=The opacity of the bloom on top of the image
