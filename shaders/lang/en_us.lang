@@ -48,6 +48,7 @@ option.LINE_THRESHOLD_DEPTH=LINE DEPTH THRESHOLD
 option.LINE_THRESHOLD_DEPTH.comment=Higher threshold means less lines detected
 option.LINE_THRESHOLD_NORMAL=LINE NORMAL THRESHOLD
 option.LINE_THRESHOLD_NORMAL.comment=Higher threshold means less lines detected
+value.LINE_THRESHOLD_NORMAL.100.0=DISABLED
 
 option.BLOOM_MIX=BLOOM MIX
 option.BLOOM_MIX.comment=The opacity of the bloom on top of the image
