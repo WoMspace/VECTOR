@@ -2,10 +2,14 @@ in vec2 vaUV0;
 in vec2 mc_midTexCoord;
 in vec4 at_tangent;
 
+#if defined(GBUFFERS_ENTITIES) && defined(ENTITY_RADAR)
+uniform int entityId;
+out int entityMask;
+#endif
+
 out vec2 mid_uv;
 out vec2 uv;
 out mat3 tbn;
-// out vec3 normal;
 
 #if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 in vec4 vaColor;
@@ -24,5 +28,9 @@ void main() {
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 	vertex_color = vaColor.rgb;
+	#endif
+
+	#if defined(GBUFFERS_ENTITIES) && defined(ENTITY_RADAR)
+	entityMask = entityId - 2000;
 	#endif
 }
