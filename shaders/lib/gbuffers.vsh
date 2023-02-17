@@ -4,7 +4,7 @@ in vec4 at_tangent;
 
 #if defined(GBUFFERS_ENTITIES) && defined(ENTITY_RADAR)
 uniform int entityId;
-out int entityMask;
+flat out int entityMask;
 #endif
 
 out vec2 mid_uv;
@@ -19,6 +19,7 @@ out vec3 vertex_color;
 
 void main() {
 	gl_Position = ftransform();
+	// gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;
 	uv = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	mid_uv = mc_midTexCoord - 0.01;
 
@@ -27,7 +28,7 @@ void main() {
 	tbn = mat3(tangent, cross(tangent, normal) * sign(at_tangent.w), normal);
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
-	vertex_color = vaColor.rgb;
+	vertex_color = gl_Color.rgb;
 	#endif
 
 	#if defined(GBUFFERS_ENTITIES) && defined(ENTITY_RADAR)

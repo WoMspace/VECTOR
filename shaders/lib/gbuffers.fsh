@@ -1,11 +1,13 @@
 in vec2 uv;
 in vec2 mid_uv;
 in mat3 tbn;
-uniform sampler2D texture;
+uniform sampler2D gtexture;
 uniform sampler2D normals;
 uniform sampler2D colortex0;
 uniform float alphaTestRef;
 uniform mat4 gbufferModelViewInverse;
+
+const bool gtextureMipmapEnable = true;
 
 #if defined(GBUFFERS_ENTITIES) && defined(ENTITY_RADAR)
 flat in int entityMask;
@@ -17,9 +19,9 @@ in vec3 vertex_color;
 
 /* RENDERTARGETS:0,3 */
 void main() {
-	vec3 color = texture2D(texture, mid_uv).rgb;
-	vec3 normal = texture2D(normals, uv).xyz;
-	float alpha = texture2D(texture, uv).a;
+	vec3 color = textureLod(gtexture, mid_uv, 3.0).rgb;
+	vec3 normal = texture(normals, uv).xyz;
+	float alpha = texture(gtexture, uv).a;
 
 	normal = normal * 2.0 - 1.0;
 	normal = tbn * normal;
@@ -27,7 +29,7 @@ void main() {
 
 
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
-	// color *= vertex_color;
+	color *= vertex_color;
 	#endif
 	if (alpha < alphaTestRef) discard;
 
