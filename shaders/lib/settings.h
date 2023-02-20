@@ -45,6 +45,9 @@ const vec3 ENTITY_COLOR_PLAYER = vec3(PLAYER_COLOR_R, PLAYER_COLOR_G, PLAYER_COL
 #define BLOOM_MIX 0.5 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 #define BLOOM_SIZE 2 // [0.1 0.2 0.4 0.8 1 2 4 6 8 12 16 24 32 48 64]
 
+#define SHOW_PLAYER_HUD
+// #define IS_IRIS
+
 // Fix wonky option screen parsing
 #ifdef GHOSTING
 #endif

@@ -7,6 +7,16 @@ uniform sampler2D colortex3; // normals, entity mask
 uniform sampler2D depthtex0;
 in vec2 uv;
 
+#if defined(SHOW_PLAYER_HUD) && defined(IS_IRIS)
+uniform float currentPlayerHealth;
+uniform float maxPlayerHealth;
+uniform float currentPlayerAir;
+uniform float maxPlayerAir;
+uniform float currentPlayerHunger;
+uniform float maxPlayerHunger;
+uniform int isEyeInWater;
+#endif
+
 uniform float far;
 uniform float near;
 
@@ -23,8 +33,47 @@ bool equals(float input1, float input2, float epsilon) {
 
 /* RENDERTARGETS:0 */
 void main() {
-	
+
 	vec3 color = vec3(0.0);
+
+
+	#ifdef IS_IRIS
+		#ifdef SHOW_PLAYER_HUD
+		
+		// HP bar
+		if(uv.x > 0.275 && uv.x < 0.475 - (0.2 - currentPlayerHealth * 0.2) && uv.y > 0.125 && uv.y < 0.15) {
+			color = vec3(1.0, 0.0, 0.0);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		} else if(uv.x > 0.275 && uv.x < 0.475 && uv.y > 0.1225 && uv.y < 0.125) {
+			color = vec3(1.0, 0.0, 0.0);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		}
+		// Hunger bar
+		else if(uv.x > 0.525 + (0.2 - currentPlayerHunger * 0.2) && uv.x < 0.725 && uv.y > 0.125 && uv.y < 0.15) {
+			color = vec3(1.0, 1.0, 0.0);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		} else if(uv.x > 0.525 && uv.x < 0.725 && uv.y > 0.1225 && uv.y < 0.125) {
+			color = vec3(1.0, 1.0, 0.0);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		}
+		// Air bar
+		else if(currentPlayerAir < 1.0 && uv.x > 0.275 + (0.225 - currentPlayerAir * 0.225) && uv.x < 0.725 - (0.225 - currentPlayerAir * 0.225) && uv.y > 0.175 && uv.y < 0.2) {
+			color = vec3(0.0, 0.5, 1.0);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		}
+		else if(currentPlayerAir < 1.0 && uv.x > 0.275 && uv.x < 0.725 && uv.y > 0.1725 && uv.y < 0.175) {
+			color = vec3(0.0, 0.5, 1.0);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		}
+		#endif
+	#endif
+	
 	for(int y = 0; y < 3; y++) {
 		for(int x = 0; x < 3; x++) {
 			vec2 offset = pixelSize * vec2(x - 1, y - 1) * 1.0;
