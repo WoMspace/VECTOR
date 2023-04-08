@@ -72,6 +72,13 @@ value.LINE_THRESHOLD_NORMAL.100.0=DISABLED
 
 option.SCANLINES.comment=Enables scanlines, emulating limited vertical resolution
 option.GHOSTING.comment=Enables ghosting due to phosphor fading
+option.SHOW_PLAYER_HUD=PLAYER HUD
+option.SHOW_PLAYER_HUD.comment=Enables HUD elements to show the player's Health, Hunger, and Oxygen. Requires Iris!
+option.HUD_CROSSHAIR=CROSSHAIR
+option.HUD_CROSSHAIR.comment=Enable a crosshair on the HUD.
+value.HUD_CROSSHAIR.0=OFF
+value.HUD_CROSSHAIR.1=CROSS
+value.HUD_CROSSHAIR.2=CIRCLE
 option.CURVATURE_X=HORIZONTAL CURVATURE
 option.CURVATURE_X.comment=Emulate horizontal screen curvature
 option.CURVATURE_Y=VERTICAL CURVATURE

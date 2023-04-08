@@ -17,3 +17,4 @@ Minecraft on an Oscilloscope
 - With long render distances, far away details may become very dense. Decrease render distance, or increase/disable `[LINE NORMAL THRESHOLD]` in `[LINE SHAPE]` settings.
 - **On Iris**, entity circle shadows appear square and may jitter depending on the viewing angle. Disable entity shadows in Iris/Sodium settings.
 - Under certain conditions the sun or moon may appear to have a large outline. Disable sun/moon in the Optifine/Iris/Sodium settings.
+- **On Optifine**, the PLAYER HUD option cannot be used. If a player toggles it on, a warning will be shown.
