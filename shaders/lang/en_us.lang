@@ -71,6 +71,11 @@ value.LINE_THRESHOLD_NORMAL.100.0=DISABLED
 
 
 option.SCANLINES.comment=Enables scanlines, emulating limited vertical resolution
+option.SCAN_SIZE=SCAN SIZE
+option.SCAN_SIZE.comment=The size of the sweeping scan effect. Required SCANLINES to be ON
+value.SCAN_SIZE.0=OFF
+option.SCAN_SPEED=SCAN SPEED
+option.SCAN_SPEED.comment=The speed of the sweeping scan effect
 option.GHOSTING.comment=Enables ghosting due to phosphor fading
 option.SHOW_PLAYER_HUD=PLAYER HUD
 option.SHOW_PLAYER_HUD.comment=Enables HUD elements to show the player's Health, Hunger, and Oxygen. Requires Iris!

@@ -1,11 +1,13 @@
 #version 150 compatibility
 
 #include "/lib/settings.h"
+#include "/lib/text.glsl"
 
 uniform sampler2D colortex0;
 in vec2 uv;
 
 uniform float far;
+uniform float frameTimeCounter;
 
 // from Builderb0y
 vec2 distort(vec2 coord) {
@@ -39,14 +41,25 @@ void main() {
 	float colorBrightness = dot(color, vec3(1.0));
 	color = colorBrightness > 0.01 ? color : USER_BG_COLOR;
 
-	// #ifdef CURVATURE
 	if(uv_curved.x < 0.0 || uv_curved.x > 1.0) { color = vec3(0.0); }
 	if(uv_curved.y < 0.0 || uv_curved.y > 1.0) { color = vec3(0.0); }
-	// #endif
 
 	#ifdef SCANLINES
-	int scanline = int(gl_FragCoord.y) % 3;
-	color *= scanline == 0 ? 0.0 : 1.0;
+		bool scanline = int(gl_FragCoord.y) % 3 == 0;
+		
+		#if SCAN_SIZE != 0
+			int scan_speed = int(viewHeight) / SCAN_SPEED;
+			int currentScanLine = int(viewHeight) - int(frameTimeCounter * scan_speed) % int(viewHeight);
+			int proximityToCurrentLine = SCAN_SIZE - clamp(abs(int(gl_FragCoord.y) - currentScanLine), 0, SCAN_SIZE);
+			float brightnessMul = float(proximityToCurrentLine) / float(SCAN_SIZE) + 1.0;
+			color *= scanline ? 0.0 : brightnessMul;
+		#else
+			color *= scanline ? 0.0 : 1.0;
+		#endif
+
+
+		// color = vec3(0.0, brightnessMul - 1.0, 0.0);
+		// color = int(gl_FragCoord.y) == currentScanLine ? vec3(1.0, 0.0, 0.0) : color;
 	#endif
 	
 	// color = texture2D(colortex0, uv).rgb;
