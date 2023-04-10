@@ -22,6 +22,7 @@ uniform float frameTimeCounter;
 uniform int hideGUI;
 uniform float far;
 uniform float near;
+uniform float aspectRatio;
 
 const float edge_kernel[9] = float[](-1.0, -1.0, -1.0, -1.0, 8.0, -1.0, -1.0, -1.0, -1.0);
 
@@ -34,6 +35,11 @@ bool equals(float input1, float input2, float epsilon) {
 	return abs(input1 - input2) < epsilon;
 }
 
+bool isCross(ivec2 position, int crossLength, int crossGirth) {
+	return (abs(gl_FragCoord.x - position.x) < crossLength && abs(gl_FragCoord.y - position.y) < crossGirth)
+	|| (abs(gl_FragCoord.y - position.y) < crossLength && abs(gl_FragCoord.x - position.x) < crossGirth);
+}
+
 /* RENDERTARGETS:0 */
 void main() {
 
@@ -42,64 +48,74 @@ void main() {
 
 	#ifdef IS_IRIS
 		#ifdef SHOW_PLAYER_HUD
-		
-		// HP bar
-		if(uv.x > 0.275 && uv.x < 0.475 - (0.2 - currentPlayerHealth * 0.2) && uv.y > 0.125 && uv.y < 0.15 && currentPlayerHealth > 0.0) {
-			color = vec3(1.0, 0.0, 0.0);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		} else if(currentPlayerHealth > -1.0 && uv.x > 0.275 && uv.x < 0.475 && uv.y > 0.1225 && uv.y < 0.125) {
-			color = vec3(1.0, 0.0, 0.0);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		}
-		// Hunger bar
-		else if(uv.x > 0.525 + (0.2 - currentPlayerHunger * 0.2) && uv.x < 0.725 && uv.y > 0.125 && uv.y < 0.15) {
-			color = vec3(1.0, 1.0, 0.0);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		} else if(currentPlayerHunger > -1.0 && uv.x > 0.525 && uv.x < 0.725 && uv.y > 0.1225 && uv.y < 0.125) {
-			color = vec3(1.0, 1.0, 0.0);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		}
-		// Air bar
-		else if(currentPlayerAir < 1.0 && uv.x > 0.275 + (0.225 - currentPlayerAir * 0.225) && uv.x < 0.725 - (0.225 - currentPlayerAir * 0.225) && uv.y > 0.175 && uv.y < 0.2) {
-			color = vec3(0.0, 0.5, 1.0);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		}
-		else if(currentPlayerAir > -1.0 && currentPlayerAir < 1.0 && uv.x > 0.275 && uv.x < 0.725 && uv.y > 0.1725 && uv.y < 0.175) {
-			color = vec3(0.0, 0.5, 1.0);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		}
-		#if HUD_CROSSHAIR == 1
-		// Cross crosshair
-		ivec2 screenCenter = ivec2(viewWidth, viewHeight) / 2;
-		if((abs(gl_FragCoord.x - screenCenter.x) < 10 && abs(gl_FragCoord.y - screenCenter.y) < 1)
-		|| (abs(gl_FragCoord.y - screenCenter.y) < 10 && abs(gl_FragCoord.x - screenCenter.x) < 1)) {
-			color = vec3(USER_COLOR);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		}
-		#elif HUD_CROSSHAIR == 2
-		// Circle crosshair
-		ivec2 screenCenter = ivec2(viewWidth, viewHeight) / 2;
-		float dist = distance(screenCenter, gl_FragCoord.xy);
-		if(dist < 10 && dist > 9  || dist < 1) {
-			color = vec3(USER_COLOR);
-			gl_FragData[0] = vec4(color, 1.0);
-			return;
-		}
-		#endif
+			// HP bar
+			if(uv.x > 0.275 && uv.x < 0.475 - (0.2 - currentPlayerHealth * 0.2) && uv.y > 0.125 && uv.y < 0.15 && currentPlayerHealth > 0.0) {
+				color = vec3(1.0, 0.0, 0.0);
+				gl_FragData[0] = vec4(color, 1.0);
+				return;
+			} else if(currentPlayerHealth > -1.0 && uv.x > 0.275 && uv.x < 0.475 && uv.y > 0.1225 && uv.y < 0.125) {
+				color = vec3(1.0, 0.0, 0.0);
+				gl_FragData[0] = vec4(color, 1.0);
+				return;
+			}
+			// Hunger bar
+			else if(uv.x > 0.525 + (0.2 - currentPlayerHunger * 0.2) && uv.x < 0.725 && uv.y > 0.125 && uv.y < 0.15) {
+				color = vec3(1.0, 1.0, 0.0);
+				gl_FragData[0] = vec4(color, 1.0);
+				return;
+			} else if(currentPlayerHunger > -1.0 && uv.x > 0.525 && uv.x < 0.725 && uv.y > 0.1225 && uv.y < 0.125) {
+				color = vec3(1.0, 1.0, 0.0);
+				gl_FragData[0] = vec4(color, 1.0);
+				return;
+			}
+			// Air bar
+			else if(currentPlayerAir < 1.0 && uv.x > 0.275 + (0.225 - currentPlayerAir * 0.225) && uv.x < 0.725 - (0.225 - currentPlayerAir * 0.225) && uv.y > 0.175 && uv.y < 0.2) {
+				color = vec3(0.0, 0.5, 1.0);
+				gl_FragData[0] = vec4(color, 1.0);
+				return;
+			}
+			else if(currentPlayerAir > -1.0 && currentPlayerAir < 1.0 && uv.x > 0.275 && uv.x < 0.725 && uv.y > 0.1725 && uv.y < 0.175) {
+				color = vec3(0.0, 0.5, 1.0);
+				gl_FragData[0] = vec4(color, 1.0);
+				return;
+			}
+			#if HUD_CROSSHAIR == 1
+				// Cross crosshair
+				ivec2 screenCenter = ivec2(viewWidth, viewHeight) / 2;
+				if(isCross(screenCenter, 10, 1)) {
+					gl_FragData[0] = vec4(USER_COLOR, 1.0);
+					return;
+				}
+			#elif HUD_CROSSHAIR == 2
+				// Circle crosshair
+				ivec2 screenCenter = ivec2(viewWidth, viewHeight) / 2;
+				float dist = distance(screenCenter, gl_FragCoord.xy);
+				if(dist < 10 && dist > 9  || dist < 1) {
+					gl_FragData[0] = vec4(USER_COLOR, 1.0);
+					return;
+				}
+			#endif
 		#endif
 	#elif defined(SHOW_PLAYER_HUD)
-	if(hideGUI == 0){
-		showWarning(color, frameTimeCounter);
-		gl_FragData[0] = vec4(color, 1.0);
-		return;
-	}
+		if(hideGUI == 0){
+			showWarning(color, frameTimeCounter);
+			gl_FragData[0] = vec4(color, 1.0);
+			return;
+		}
+	#endif
+
+	#ifdef RESEAU_PLATE
+		for(int x = 0; x < FIDUCIAL_MARKERS_X; x++) { for(int y = 0; y < FIDUCIAL_MARKERS_Y; y++) {
+			ivec2 marker_position = ivec2(
+				viewWidth / FIDUCIAL_MARKERS_X * (x + 0.5),
+				viewHeight / FIDUCIAL_MARKERS_Y * (y + 0.5)
+			);
+
+			if(isCross(marker_position, 20, 1)) {
+				gl_FragData[0] = vec4(USER_COLOR, 1.0);
+				return;
+			};
+		}}
 	#endif
 	
 	for(int y = 0; y < 3; y++) {
