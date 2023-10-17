@@ -14,7 +14,10 @@ out mat3 tbn;
 #if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 in vec4 vaColor;
 in vec3 vaPosition;
-out vec3 vertex_color;
+	#ifdef GBUFFERS_WATER
+	attribute vec3 mc_Entity;
+	out float blockID;
+	#endif
 #endif
 
 void main() {
@@ -30,6 +33,11 @@ void main() {
 	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 	vertex_color = gl_Color.rgb;
 	#endif
+
+	#ifdef GBUFFERS_WATER;
+	blockID = mc_Entity.x;
+	#endif
+
 
 	#if defined(GBUFFERS_ENTITIES) && defined(ENTITY_RADAR)
 	entityMask = entityId - 2000;

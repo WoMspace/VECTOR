@@ -68,6 +68,8 @@ option.LINE_THRESHOLD_DEPTH.comment=Higher threshold means less lines detected
 option.LINE_THRESHOLD_NORMAL=LINE NORMAL THRESHOLD
 option.LINE_THRESHOLD_NORMAL.comment=Higher threshold means less lines detected
 value.LINE_THRESHOLD_NORMAL.100.0=DISABLED
+option.SEE_THROUGH_GLASS=SEE THROUGH GLASS
+option.SEE_THROUGH_GLASS.comment=Prevents stained glass from being opaque, at the cost of it now being invisible. The block outline will still show.
 
 
 option.SCANLINES.comment=Enables scanlines, emulating limited vertical resolution

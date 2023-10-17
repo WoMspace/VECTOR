@@ -14,6 +14,8 @@ vec2 pixelSize = 1.0 / vec2(viewWidth, viewHeight);
 #define CURVATURE_X 1.0 // [-1.0 -0.9 -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.2 1.4 1.6 1.8 2.0]
 #define CURVATURE_Y 1.0 // [-1.0 -0.9 -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.2 1.4 1.6 1.8 2.0]
 
+// #define SEE_THROUGH_GLASS
+
 #define MONOCHROME
 #define THICKER_LINES
 #define LINE_COLOR_R 0.0 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
@@ -55,10 +57,14 @@ const vec3 ENTITY_COLOR_PLAYER = vec3(PLAYER_COLOR_R, PLAYER_COLOR_G, PLAYER_COL
 // #define IS_IRIS
 
 // Fix wonky option screen parsing
+/*
 #ifdef GHOSTING
 #endif
-// #ifdef VECTOR_SHADER
-// #endif
+#ifdef VECTOR_SHADER
+#endif
+#ifdef SEE_THROUGH_GLASS
+#endif
+*/
 
 /* 
 	COLORTEX0:

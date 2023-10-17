@@ -16,6 +16,9 @@ flat in int entityMask;
 #if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
 in vec3 vertex_color;
 #endif
+#ifdef GBUFFERS_WATER
+in float blockID;
+#endif
 
 /* RENDERTARGETS:0,3 */
 void main() {
@@ -35,6 +38,11 @@ void main() {
 	color *= vertex_color;
 	#endif
 	if (alpha < alphaTestRef) discard;
+
+	#if defined GBUFFERS_WATER && defined SEE_THROUGH_GLASS
+	if(blockID == 1004 || blockID == 1005) discard; // Stained glass + tinted glass
+	#endif
+
 
 	#ifdef GBUFFERS_SKYBASIC
 	color = vec3(0.5);
