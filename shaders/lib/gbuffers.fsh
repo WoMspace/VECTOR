@@ -19,6 +19,9 @@ in vec3 vertex_color;
 
 /* RENDERTARGETS:0,3 */
 void main() {
+	#ifdef GBUFFERS_SKYTEXTURED
+	discard;
+	#endif
 	vec3 color = textureLod(gtexture, mid_uv, 3.0).rgb;
 	vec3 normal = texture(normals, uv).xyz;
 	float alpha = texture(gtexture, uv).a;
