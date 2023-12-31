@@ -2,12 +2,12 @@
 
 void showWarning(inout vec3 color, float frameTimeCounter) {
 
-	const float fontSize = 0.35; // smaller number = bigger text
+	const float fontSize = 0.6; // smaller number = bigger text
 	beginText(ivec2(gl_FragCoord.xy * fontSize), ivec2(20, viewHeight * fontSize - 30));
 	text.fgCol = vec4(USER_COLOR, 1.0);
 	text.bgCol = vec4(vec3(0.0), 1.0);
 	// VECTOR ©️ Imperion Inc. 2023
-	printString((_V, _E, _C, _T, _O, _R, _space, _copyr, _space, _I, _m, _p, _e, _r, _i, _o, _n, _space, _I, _n, _c, _dot, _space, _2, _0, _2, _3));
+	printString((_V, _E, _C, _T, _O, _R, _space, _opprn, _C, _clprn, _space, _I, _m, _p, _e, _r, _i, _o, _n, _space, _I, _n, _c, _dot, _space, _2, _0, _2, _3));
 	printLine();
 	printLine();
 	// setting "PLAYER HUD" requires IRIS 1.6 or later!

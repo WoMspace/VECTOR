@@ -45,90 +45,11 @@
 #if !defined UTILITY_TEXTRENDERING_INCLUDED
 #define UTILITY_TEXTRENDERING_INCLUDED
 
-// Characters
+// Include a font here
+#include "/lib/terminus.glsl"
 
-const uint _A     = 0x747f18c4u;
-const uint _B     = uint(0xf47d18f8);
-const uint _C     = uint(0x746108b8);
-const uint _D     = uint(0xf46318f8);
-const uint _E     = uint(0xfc39087c);
-const uint _F     = uint(0xfc390840);
-const uint _G     = uint(0x7c2718b8);
-const uint _H     = uint(0x8c7f18c4);
-const uint _I     = uint(0x71084238);
-const uint _J     = uint(0x084218b8);
-const uint _K     = uint(0x8cb928c4);
-const uint _L     = uint(0x8421087c);
-const uint _M     = uint(0x8eeb18c4);
-const uint _N     = uint(0x8e6b38c4);
-const uint _O     = uint(0x746318b8);
-const uint _P     = uint(0xf47d0840);
-const uint _Q     = uint(0x74631934);
-const uint _R     = uint(0xf47d18c4);
-const uint _S     = uint(0x7c1c18b8);
-const uint _T     = uint(0xf9084210);
-const uint _U     = uint(0x8c6318b8);
-const uint _V     = uint(0x8c62a510);
-const uint _W     = uint(0x8c635dc4);
-const uint _X     = uint(0x8a88a8c4);
-const uint _Y     = uint(0x8a884210);
-const uint _Z     = uint(0xf844447c);
-const uint _a     = uint(0x0382f8bc);
-const uint _b     = uint(0x85b318f8);
-const uint _c     = uint(0x03a308b8);
-const uint _d     = uint(0x0b6718bc);
-const uint _e     = uint(0x03a3f83c);
-const uint _f     = uint(0x323c8420);
-const uint _g     = uint(0x03e2f0f8);
-const uint _h     = uint(0x842d98c4);
-const uint _i     = uint(0x40308418);
-const uint _j     = uint(0x080218b8);
-const uint _k     = uint(0x4254c524);
-const uint _l     = uint(0x6108420c);
-const uint _m     = uint(0x06ab5ac4);
-const uint _n     = uint(0x07a318c4);
-const uint _o     = uint(0x03a318b8);
-const uint _p     = uint(0x05b31f40);
-const uint _q     = uint(0x03671784);
-const uint _r     = uint(0x05b30840);
-const uint _s     = uint(0x03e0e0f8);
-const uint _t     = uint(0x211c420c);
-const uint _u     = uint(0x046318bc);
-const uint _v     = uint(0x04631510);
-const uint _w     = uint(0x04635abc);
-const uint _x     = uint(0x04544544);
-const uint _y     = uint(0x0462f0f8);
-const uint _z     = uint(0x07c4447c);
-const uint _0     = uint(0x746b58b8);
-const uint _1     = uint(0x23084238);
-const uint _2     = uint(0x744c88fc);
-const uint _3     = uint(0x744c18b8);
-const uint _4     = uint(0x19531f84);
-const uint _5     = uint(0xfc3c18b8);
-const uint _6     = uint(0x3221e8b8);
-const uint _7     = uint(0xfc422210);
-const uint _8     = uint(0x745d18b8);
-const uint _9     = uint(0x745e1130);
-const uint _space = uint(0x0000000);
-const uint _dot   = uint(0x000010);
-const uint _minus = uint(0x0000e000);
-const uint _comma = uint(0x00000220);
-const uint _colon = uint(0x02000020);
-
-const uint _under = 0x000007Cu;  // _
-const uint _quote = 0x52800000u; // "
-const uint _exclm = 0x21084010u; // !
-const uint _gt    = 0x02082220u; // >
-const uint _lt    = 0x00888208u; // <
-const uint _opsqr = 0x3908421Cu; // [
-const uint _clsqr = 0xE1084270u; // ]
-const uint _opprn = 0x11084208u; // (
-const uint _clprn = 0x41084220u; // )
-const uint _block = 0xFFFFFFFCu; // █
-const uint _copyr = 0x03AB9AB8u; // ©️
-
-const int charWidth   = 5;
-const int charHeight  = 6;
+const int charWidth   = 8;
+const int charHeight  = 16;
 const int charSpacing = 1;
 const int lineSpacing = 3;
 
@@ -165,10 +86,10 @@ void endText(inout vec3 fragColor) {
 	fragColor = mix(fragColor.rgb, text.result.rgb, text.result.a);
 }
 
-void printChar(uint character) {
+void printChar(uvec4 character) {
 	ivec2 pos = text.fragPos - text.textPos - spaceSize * text.charPos * ivec2(1, -1) + ivec2(0, spaceSize.y);
 
-	uint index = uint(charWidth - pos.x + pos.y * charWidth + 1);
+	uint index = uint(pos.y * 8 + 7 - pos.x);
 
 	// Draw background
 	if (clamp(pos, ivec2(0), spaceSize - 1) == pos)
@@ -176,19 +97,19 @@ void printChar(uint character) {
 
 	// Draw character
 	if (clamp(pos, ivec2(0), charSize - 1) == pos)
-		text.result = mix(text.result, text.fgCol, text.fgCol.a * float(character >> index & 1u));
+		text.result = mix(text.result, text.fgCol, text.fgCol.a * float((character[(index >> 5)] >> (index & 31u)) & 1u));
 
 	// Advance to next character
 	text.charPos.x++;
 }
 
 #define printString(string) {                                               \
-	uint[] characters = uint[] string;                                     \
+	uvec4[] characters = uvec4[] string;                                     \
 	for (int i = 0; i < characters.length(); ++i) printChar(characters[i]); \
 }
 
 void printUnsignedInt(uint value, int len) {
-	const uint[36] digits = uint[](
+	const uvec4[36] digits = uvec4[](
 		_0, _1, _2, _3, _4, _5, _6, _7, _8, _9,
 		_a, _b, _c, _d, _e, _f, _g, _h, _i, _j,
 		_k, _l, _m, _n, _o, _p, _q, _r, _s, _t,
@@ -220,12 +141,12 @@ void printUnsignedInt(uint value) {
 }
 
 void printInt(int value) {
-	if (value < 0) printChar(_minus);
+	if (value < 0) printChar(_hyphn);
 	printUnsignedInt(uint(abs(value)));
 }
 
 void printFloat(float value) {
-	if (value < 0.0) printChar(_minus);
+	if (value < 0.0) printChar(_hyphn);
 
 	if (isnan(value)) {
 		printString((_N, _a, _N));
