@@ -53,7 +53,11 @@ const vec3 ENTITY_COLOR_PLAYER = vec3(PLAYER_COLOR_R, PLAYER_COLOR_G, PLAYER_COL
 #define HUD_CROSSHAIR 0 // [0 1 2]
 // #define RESEAU_PLATE
 #define FIDUCIAL_MARKERS_X 3 // [1 2 3 4 5 6 7 8 9]
-#define FIDUCIAL_MARKERS_Y 3// [1 2 3 4 5 6 7 8 9]
+#define FIDUCIAL_MARKERS_Y 3 // [1 2 3 4 5 6 7 8 9]
+
+#define COMPASS_HORIZONTAL
+#define COMPASS_VERTICAL
+#define COMPASS_SPACING
 // #define IS_IRIS
 
 // Fix wonky option screen parsing

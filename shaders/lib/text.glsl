@@ -131,7 +131,7 @@ void printUnsignedInt(uint value, int len) {
 }
 
 void printUnsignedInt(uint value) {
-	float logValue = log(float(value));
+	float logValue = log(float(value)) + 1e-6;
 	float logBase  = log(float(text.base));
 
 	int len = int(ceil(logValue / logBase));

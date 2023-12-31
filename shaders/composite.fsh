@@ -18,6 +18,10 @@ uniform float currentPlayerHunger;
 uniform float maxPlayerHunger;
 #endif
 
+#if defined COMPASS_HORIZONTAL || defined COMPASS_VERTICAL
+uniform mat4 gbufferModelView;
+#endif
+
 uniform float frameTimeCounter;
 uniform int hideGUI;
 uniform float far;
@@ -116,6 +120,66 @@ void main() {
 				return;
 			};
 		}}
+	#endif
+
+	#ifdef COMPASS_HORIZONTAL
+		const float size = 16.0;
+		vec3 direction = gbufferModelView[2].xyz;
+		float theta = atan(direction.z, direction.x);
+		theta = -degrees(theta) + 90;
+		theta = mod(theta, 360.0);
+		
+
+		beginText(ivec2(gl_FragCoord.xy), ivec2(0, viewHeight));
+		text.fgCol = vec4(USER_COLOR, 1.0);
+		text.bgCol = vec4(USER_BG_COLOR, 0.0);
+		// printVec3(direction);
+		// printLine();
+		printString((_H, _dot, _a, _n, _g, _l, _e, _colon));
+		printFloat(theta);
+		// printInt(int(theta));
+		endText(color);
+
+		// lines
+		if(uv.x > 0.3 && uv.x < 0.7 && uv.y > 0.9 && uv.y < 0.93) {
+			vec3 line_color = vec3(0.0);
+			for(int angle_marker = 0; angle_marker < 720; angle_marker += 5) {
+				float offset = -theta * size + viewWidth * 0.5;
+				if(theta < 180.0) { offset -= 360.0 * size; }
+				float line_pos = angle_marker * size + offset;
+				if(abs(gl_FragCoord.x - line_pos) < 1.0) {
+					gl_FragData[0] = vec4(USER_COLOR, 1.0);
+					return;
+				}
+			}
+			gl_FragData[0] = vec4(0.0);
+			return;
+		}
+		// text
+		if(uv.x > 0.3 && uv.x < 0.7 && uv.y > 0.93 && uv.y < 0.97) {
+			beginText(ivec2(gl_FragCoord.xy * 0.5), ivec2(0));
+			text.fgCol = vec4(USER_COLOR, 1.0);
+			text.bgCol = vec4(0.0);
+			vec3 text_line = vec3(0.0);
+			
+			for(int angle_marker = 0; angle_marker < 720; angle_marker += 10) {
+				float offset = -theta * size + viewWidth * 0.5;
+				float digit_offset = 6.0;
+				if(angle_marker % 360 >= 10.0) digit_offset += 10.0;
+				if(angle_marker % 360 >= 100.0) digit_offset += 8.0;
+				if(theta < 180.0) { offset -= 360.0 * size; }
+				vec2 text_pos = vec2(angle_marker * size + offset - digit_offset, viewHeight * 0.97) * 0.5;
+				text.charPos = ivec2(0);
+				text.textPos = ivec2(text_pos);
+				printInt(angle_marker % 360);
+				// printLine();
+				// printChar(_pipe);
+			}
+
+			endText(text_line);
+			gl_FragData[0] = vec4(text_line, 1.0);
+			return;
+		}
 	#endif
 	
 	for(int y = 0; y < 3; y++) {
