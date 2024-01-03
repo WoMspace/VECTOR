@@ -123,26 +123,21 @@ void main() {
 	#endif
 
 	#ifdef COMPASS_HORIZONTAL
-		const float size = 16.0;
-		vec3 direction = gbufferModelView[2].xyz;
-		float theta = atan(direction.z, direction.x);
-		theta = -degrees(theta) + 90;
-		theta = mod(theta, 360.0);
-		
+	{
+		const float size = 15.0;
+		float theta = gbufferModelView[0][0];
+		theta = acos(theta) / 3.1415926;
+		if(gbufferModelView[2][0] < 0.0) theta *= -1.0;
+		theta *= 180.0;
 
-		beginText(ivec2(gl_FragCoord.xy), ivec2(0, viewHeight));
-		text.fgCol = vec4(USER_COLOR, 1.0);
-		text.bgCol = vec4(USER_BG_COLOR, 0.0);
-		// printVec3(direction);
-		// printLine();
-		printString((_H, _dot, _a, _n, _g, _l, _e, _colon));
-		printFloat(theta);
-		// printInt(int(theta));
-		endText(color);
+		// calibration line
+		if(abs(uv.x - 0.5) < 0.0005 && uv.y > 0.915 && uv.y < 0.955) {
+			gl_FragData[0] = vec4(USER_COLOR, 1.0);
+			return;
+		}
 
 		// lines
-		if(uv.x > 0.3 && uv.x < 0.7 && uv.y > 0.9 && uv.y < 0.93) {
-			vec3 line_color = vec3(0.0);
+		if(uv.x > 0.3 && uv.x < 0.7 && uv.y > 0.92 && uv.y < 0.95) {
 			for(int angle_marker = 0; angle_marker < 720; angle_marker += 5) {
 				float offset = -theta * size + viewWidth * 0.5;
 				if(theta < 180.0) { offset -= 360.0 * size; }
@@ -156,7 +151,7 @@ void main() {
 			return;
 		}
 		// text
-		if(uv.x > 0.3 && uv.x < 0.7 && uv.y > 0.93 && uv.y < 0.97) {
+		if(uv.x > 0.3 && uv.x < 0.7 && uv.y > 0.95 && uv.y < 0.99) {
 			beginText(ivec2(gl_FragCoord.xy * 0.5), ivec2(0));
 			text.fgCol = vec4(USER_COLOR, 1.0);
 			text.bgCol = vec4(0.0);
@@ -168,7 +163,7 @@ void main() {
 				if(angle_marker % 360 >= 10.0) digit_offset += 10.0;
 				if(angle_marker % 360 >= 100.0) digit_offset += 8.0;
 				if(theta < 180.0) { offset -= 360.0 * size; }
-				vec2 text_pos = vec2(angle_marker * size + offset - digit_offset, viewHeight * 0.97) * 0.5;
+				vec2 text_pos = vec2(angle_marker * size + offset - digit_offset, viewHeight * 0.993) * 0.5;
 				text.charPos = ivec2(0);
 				text.textPos = ivec2(text_pos);
 				printInt(angle_marker % 360);
@@ -180,6 +175,58 @@ void main() {
 			gl_FragData[0] = vec4(text_line, 1.0);
 			return;
 		}
+	}
+	#endif
+	#ifdef COMPASS_VERTICAL
+	{
+		const float size = 12.0;
+		float theta = gbufferModelView[1][2];
+		theta = acos(theta) / 3.1415926;
+		theta = theta * 180.0 - 90.0;
+
+		// calibration line
+		if(uv.x > 0.045 && uv.x < 0.075 && abs(uv.y - 0.5) < 0.001) {
+			gl_FragData[0] = vec4(USER_COLOR, 1.0);
+			return;
+		}
+		// lines
+		if(uv.x > 0.05 && uv.x < 0.07 && uv.y > 0.2 && uv.y < 0.8) {
+			for(int angle_marker = -130; angle_marker <= 130; angle_marker += 5) {
+				float offset = -theta * size + viewHeight * 0.5;
+				float line_pos = angle_marker * size + offset;
+				if(abs(gl_FragCoord.y - line_pos) < 1.0) {
+					gl_FragData[0] = vec4(USER_COLOR, 1.0);
+					return;
+				}
+			}
+			gl_FragData[0] = vec4(0.0);
+			return;
+		}
+
+		// text
+		if(uv.x > 0.01 && uv.x < 0.05 && uv.y > 0.2 && uv.y < 0.8) {
+			beginText(ivec2(gl_FragCoord.xy * 0.5), ivec2(0));
+			text.fgCol = vec4(USER_COLOR, 1.0);
+			text.bgCol = vec4(0.0);
+			vec3 text_line = vec3(0.0);
+
+			for(int angle_marker = -130; angle_marker <= 130; angle_marker += 10) {
+				float offset = -theta * size + viewHeight * 0.5;
+				vec2 digit_offset = vec2(0.0, 10.0);
+				if(angle_marker < 0.0) digit_offset.x -= 9.0;
+				if(abs(angle_marker) >= 10.0) digit_offset.x -= 9.0;
+				if(abs(angle_marker) >= 100.0) digit_offset.x -= 9.0;
+				vec2 text_pos = vec2(viewWidth * 0.035, angle_marker * size + offset) * 0.5 + digit_offset;
+				text.charPos = ivec2(0);
+				text.textPos = ivec2(text_pos);
+				printInt(angle_marker);
+			}
+
+			endText(text_line);
+			gl_FragData[0] = vec4(text_line, 1.0);
+			return;
+		}
+	}
 	#endif
 	
 	for(int y = 0; y < 3; y++) {
