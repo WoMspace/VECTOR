@@ -30,11 +30,11 @@ void main() {
 	vec3 tangent = normalize(gl_NormalMatrix * at_tangent.xyz);
 	tbn = mat3(tangent, cross(tangent, normal) * sign(at_tangent.w), normal);
 
-	#if defined(GBUFFERS_TERRAIN) || defined(GBUFFERS_WATER)
+	#if defined GBUFFERS_TERRAIN || defined GBUFFERS_WATER
 	vertex_color = gl_Color.rgb;
 	#endif
 
-	#ifdef GBUFFERS_WATER;
+	#ifdef GBUFFERS_WATER
 	blockID = mc_Entity.x;
 	#endif
 

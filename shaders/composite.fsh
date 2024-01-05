@@ -18,8 +18,15 @@ uniform float currentPlayerHunger;
 uniform float maxPlayerHunger;
 #endif
 
-#if defined COMPASS_HORIZONTAL || defined COMPASS_VERTICAL
+#if defined HUD_COMPASS_HORIZONTAL || defined HUD_COMPASS_VERTICAL
 uniform mat4 gbufferModelView;
+#endif
+
+#ifdef HUD_COORDS
+uniform vec3 cameraPosition;
+#endif
+#ifdef HUD_CAMERA_DETAILS
+uniform mat4 gbufferProjection;
 #endif
 
 uniform float frameTimeCounter;
@@ -122,9 +129,68 @@ void main() {
 		}}
 	#endif
 
-	#ifdef COMPASS_HORIZONTAL
+	#ifdef HUD_COORDS
 	{
-		const float size = 15.0;
+		ivec3 coords = ivec3(cameraPosition);
+		// box
+		if(uv.x > 0.01 && uv.x < 0.08 && uv.y > 0.85 && uv.y < 0.97) {
+			if(uv.x > 0.011 && uv.x < 0.079 && uv.y > 0.8515 && uv.y < 0.9685) {
+				vec3 col = vec3(0.0);
+				beginText(ivec2(gl_FragCoord.xy * 0.5), ivec2(vec2(0.025 * viewWidth, 0.97 * viewHeight) * 0.5));
+				text.fgCol = vec4(USER_COLOR, 1.0);
+				// right-align
+				if(abs(coords.x) < 1000) {printString((_space));}; if(abs(coords.x) < 100) {printString((_space));}; if(abs(coords.x) < 10) {printString((_space));}; if(coords.x >= 0) printString((_space));
+				// x-component
+				printInt(coords.x); printLine();
+				// right-align
+				if(abs(coords.y) < 1000) {printString((_space));}; if(abs(coords.y) < 100) {printString((_space));}; if(abs(coords.y) < 10) {printString((_space));}; if(coords.y >= 0) printString((_space));
+				// y-component
+				printInt(coords.y); printLine();
+				// right-align
+				if(abs(coords.z) < 1000) {printString((_space));}; if(abs(coords.z) < 100) {printString((_space));}; if(abs(coords.z) < 10) {printString((_space));}; if(coords.z >= 0) printString((_space));
+				// z-component
+				printInt(coords.z);
+				endText(col);
+				gl_FragData[0] = vec4(col, 1.0);
+				return;
+			} else {
+
+				gl_FragData[0] = vec4(USER_COLOR, 1.0);
+				return;
+			}
+		}
+	}
+	#endif
+
+	#ifdef HUD_CAMERA_DETAILS
+	{
+		if(uv.x > 0.01 && uv.x < 0.15 && uv.y > 0.04 && uv.y < 0.125) {
+			if(uv.x > 0.011 && uv.x < 0.149 && uv.y > 0.0415 && uv.y < 0.1235) {
+				vec3 col = vec3(0.0);
+				beginText(ivec2(gl_FragCoord.xy * 0.5), ivec2(0.015 * viewWidth, 0.125 * viewHeight) / 2);
+				text.fgCol = vec4(USER_COLOR, 1.0);
+				float focal_length = gbufferProjection[1].y * 11.87;
+				float fov = 2.0 * atan(24.0 / (2.0 * focal_length));
+				fov = degrees(fov);
+				// right-align
+				// if(fov < 100.0) {printChar(_space);}; if(fov < 10.0) { printChar(_space);};
+				printUnsignedInt(uint(fov)); printChar(_deg);
+				printLine();
+				printUnsignedInt(uint(viewWidth)); printChar(_times); printUnsignedInt(uint(viewHeight));
+				endText(col);
+				gl_FragData[0] = vec4(col, 1.0);
+				return;
+			} else {
+				gl_FragData[0] = vec4(USER_COLOR, 1.0);
+				return;
+			}
+		}
+	}
+	#endif
+
+	#ifdef HUD_COMPASS_HORIZONTAL
+	{
+		float size = HUD_COMPASS_HORIZONTAL_SPACING;
 		float theta = gbufferModelView[0][0];
 		theta = acos(theta) / 3.1415926;
 		if(gbufferModelView[2][0] < 0.0) theta *= -1.0;
@@ -177,9 +243,9 @@ void main() {
 		}
 	}
 	#endif
-	#ifdef COMPASS_VERTICAL
+	#ifdef HUD_COMPASS_VERTICAL
 	{
-		const float size = 12.0;
+		const float size = HUD_COMPASS_VERTICAL_SPACING;
 		float theta = gbufferModelView[1][2];
 		theta = acos(theta) / 3.1415926;
 		theta = theta * 180.0 - 90.0;
@@ -228,6 +294,8 @@ void main() {
 		}
 	}
 	#endif
+
+
 	
 	for(int y = 0; y < 3; y++) {
 		for(int x = 0; x < 3; x++) {

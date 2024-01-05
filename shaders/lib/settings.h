@@ -49,16 +49,20 @@ const vec3 ENTITY_COLOR_PLAYER = vec3(PLAYER_COLOR_R, PLAYER_COLOR_G, PLAYER_COL
 #define BLOOM_MIX 0.5 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 #define BLOOM_SIZE 2 // [0.1 0.2 0.4 0.8 1 2 4 6 8 12 16 24 32 48 64]
 
+// #define IS_IRIS
 // #define SHOW_PLAYER_HUD
 #define HUD_CROSSHAIR 0 // [0 1 2]
 // #define RESEAU_PLATE
 #define FIDUCIAL_MARKERS_X 3 // [1 2 3 4 5 6 7 8 9]
 #define FIDUCIAL_MARKERS_Y 3 // [1 2 3 4 5 6 7 8 9]
 
-#define COMPASS_HORIZONTAL
-#define COMPASS_VERTICAL
-#define COMPASS_SPACING
-// #define IS_IRIS
+#define HUD_COMPASS_HORIZONTAL
+#define HUD_COMPASS_HORIZONTAL_SPACING 16.0 // [8.0 10.0 12.0 16.0 18.0 20.0 24.0 28.0 32.0]
+#define HUD_COMPASS_VERTICAL
+#define HUD_COMPASS_VERTICAL_SPACING 12.0 // [6.0 8.0 10.0 12.0 16.0 18.0 20.0 24.0 28.0 32.0]
+#define HUD_COORDS
+#define HUD_CAMERA_DETAILS
+
 
 // Fix wonky option screen parsing
 /*

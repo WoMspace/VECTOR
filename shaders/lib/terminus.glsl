@@ -17,18 +17,19 @@ const uvec4 _comma = uvec4(0x30000000u, 0x00001818u, 0x00000000u, 0x00000000u);
 const uvec4 _dot = uvec4(0x00000000u, 0x00001818u, 0x00000000u, 0x00000000u);
 const uvec4 _fslsh = uvec4(0x00000000u, 0x30306060u, 0x0c0c1818u, 0x00000606u);
 
-// const uvec4 _plus = uvec4(0x00000000u, 0x18180000u, 0x0018187eu, 0x00000000u);
-// const uvec4 _hyphn = uvec4(0x00000000u, 0x00000000u, 0x000000feu, 0x00000000u);
-// const uvec4 _0 = uvec4(0x00000000u, 0xe6c6c67cu, 0xc6cedef6u, 0x00007cc6u);
-// const uvec4 _1 = uvec4(0x00000000u, 0x1818187eu, 0x78181818u, 0x00001838u);
-// const uvec4 _2 = uvec4(0x00000000u, 0x3060c0feu, 0xc6060c18u, 0x00007cc6u);
-// const uvec4 _3 = uvec4(0x00000000u, 0x06c6c67cu, 0xc6063c06u, 0x00007cc6u);
-// const uvec4 _4 = uvec4(0x00000000u, 0xfe060606u, 0x1e3666c6u, 0x0000060eu);
-// const uvec4 _5 = uvec4(0x00000000u, 0x0606c67cu, 0xc0c0fc06u, 0x0000fec0u);
-// const uvec4 _6 = uvec4(0x00000000u, 0xc6c6c67cu, 0xc0c0fcc6u, 0x00003c60u);
-// const uvec4 _7 = uvec4(0x00000000u, 0x18303030u, 0x060c0c18u, 0x0000fe06u);
-// const uvec4 _8 = uvec4(0x00000000u, 0xc6c6c67cu, 0xc6c67cc6u, 0x00007cc6u);
-// const uvec4 _9 = uvec4(0x00000000u, 0x06060c78u, 0xc6c6c67eu, 0x00007cc6u);
+// original Terminus font
+const uvec4 t_plus = uvec4(0x00000000u, 0x18180000u, 0x0018187eu, 0x00000000u);
+const uvec4 t_hyphn = uvec4(0x00000000u, 0x00000000u, 0x000000feu, 0x00000000u);
+const uvec4 t_0 = uvec4(0x00000000u, 0xe6c6c67cu, 0xc6cedef6u, 0x00007cc6u);
+const uvec4 t_1 = uvec4(0x00000000u, 0x1818187eu, 0x78181818u, 0x00001838u);
+const uvec4 t_2 = uvec4(0x00000000u, 0x3060c0feu, 0xc6060c18u, 0x00007cc6u);
+const uvec4 t_3 = uvec4(0x00000000u, 0x06c6c67cu, 0xc6063c06u, 0x00007cc6u);
+const uvec4 t_4 = uvec4(0x00000000u, 0xfe060606u, 0x1e3666c6u, 0x0000060eu);
+const uvec4 t_5 = uvec4(0x00000000u, 0x0606c67cu, 0xc0c0fc06u, 0x0000fec0u);
+const uvec4 t_6 = uvec4(0x00000000u, 0xc6c6c67cu, 0xc0c0fcc6u, 0x00003c60u);
+const uvec4 t_7 = uvec4(0x00000000u, 0x18303030u, 0x060c0c18u, 0x0000fe06u);
+const uvec4 t_8 = uvec4(0x00000000u, 0xc6c6c67cu, 0xc6c67cc6u, 0x00007cc6u);
+const uvec4 t_9 = uvec4(0x00000000u, 0x06060c78u, 0xc6c6c67eu, 0x00007cc6u);
 
 // Hornet Font
 const uvec4 _0 = uvec4(0x423c0000u, 0x81818181u, 0x81818181u, 0x003c4281u);
