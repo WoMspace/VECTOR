@@ -1,4 +1,4 @@
-# Vector-Shader
+# VECTOR
 Minecraft on an Oscilloscope
 
 ## Features
